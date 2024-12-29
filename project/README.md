@@ -1,7 +1,7 @@
 <div align="center">
   <h1>🚀 Simple 3-Tier Java Application</h1>
   <p align="center">
-  <img src="https://github.com/user-attachments/assets/8797104c-5933-4a02-a689-53a0a8939083" alt="3-Tier Architecture" width="900">
+  <img src="https://github.com/user-attachments/assets/8797104c-5933-4a02-a689-53a0a8939083" alt="3-Tier Architecture" height="600" width="900">
 </p>
   <img src="https://github.com/user-attachments/assets/a66f2e4b-178e-4be3-be01-d2e476496af7" alt="Image 1" width="900" />
   <img src="https://github.com/user-attachments/assets/25acb707-39b6-44a5-b6fa-ee81e456f277" alt="Image 2" width="900" />
