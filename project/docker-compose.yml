@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  db:
+    build: ./db-tier  # Build from the Dockerfile in db-tier
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Set the MySQL root password
+      MYSQL_DATABASE: office_db  # The database to create
+    ports:
+      - "3306:3306"  # Expose port 3306 for MySQL connections
+
+  web-tier:
+    build: ./web-tier  # Assuming you have a Dockerfile in the web-tier directory
+    ports:
+      - "8080:8080"  # Expose port for web application
+
+  app-tier:
+    build: ./app-tier  # Assuming you have a Dockerfile in the app-tier directory
+    ports:
+      - "8081:8081"  # Expose port for app-tier services
+    depends_on:
+      - db  # Ensure the db service is started before the app-tier
+
