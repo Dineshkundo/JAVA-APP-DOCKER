@@ -1,5 +1,9 @@
-# 🚀 Simple 3-Tier Java Application
-
+<div align="center">
+  <h1>🚀 Simple 3-Tier Java Application</h1>
+  <img src="https://github.com/user-attachments/assets/a66f2e4b-178e-4be3-be01-d2e476496af7" alt="Image 1" />
+  <img src="https://github.com/user-attachments/assets/25acb707-39b6-44a5-b6fa-ee81e456f277" alt="Image 2" />
+  <img src="https://github.com/user-attachments/assets/b072ee01-d973-4549-9b80-d78b469f6323" alt="Image 3" />
+</div>
 This project demonstrates a simple 3-tier Java application using Docker and Docker Compose. The architecture includes:
 
 - **Web Tier**: Serves the user interface.
