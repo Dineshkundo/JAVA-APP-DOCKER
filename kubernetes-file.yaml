@@ -1,0 +1,112 @@
+# Database Tier Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-tier-deployment
+spec:
+  replicas: 1  # 1 replica for db
+  selector:
+    matchLabels:
+      app: db-tier
+  template:
+    metadata:
+      labels:
+        app: db-tier
+    spec:
+      containers:
+      - name: db-tier
+        image: dineshkundo/db-tier:1.0  # Docker Hub Image
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root"  # MySQL root password
+        - name: MYSQL_DATABASE
+          value: "office_db"  # The initial database to create
+---
+# Database Tier Service - Internal access only (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-tier-service
+spec:
+  selector:
+    app: db-tier
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+  type: ClusterIP  # Internal access only
+---
+# Web Tier Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-tier-deployment
+spec:
+  replicas: 1  # 1 replica for web-tier
+  selector:
+    matchLabels:
+      app: web-tier
+  template:
+    metadata:
+      labels:
+        app: web-tier
+    spec:
+      containers:
+      - name: web-tier
+        image: dineshkundo/web-tier:1.0  # Docker Hub Image
+        ports:
+        - containerPort: 8080
+---
+# Web Tier Service - Exposed via NodePort (external access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-tier-service
+spec:
+  selector:
+    app: web-tier
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort  # Expose to external world (you can also use LoadBalancer)
+---
+# App Tier Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-tier-deployment
+spec:
+  replicas: 1  # 1 replica for app-tier
+  selector:
+    matchLabels:
+      app: app-tier
+  template:
+    metadata:
+      labels:
+        app: app-tier
+    spec:
+      containers:
+      - name: app-tier
+        image: dineshkundo/app-tier:1.0  # Docker Hub Image
+        ports:
+        - containerPort: 8081
+        env:
+        - name: DB_HOST
+          value: "db-tier-service"  # Reference the db-tier service name
+---
+# App Tier Service - Internal access only (ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-tier-service
+spec:
+  selector:
+    app: app-tier
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+  type: ClusterIP  # Internal access only
